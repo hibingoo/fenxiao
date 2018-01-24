@@ -9,7 +9,7 @@
      <input type="password" v-model="password" data-status="2" @focus="myfocus" @blur="myblur" placeholder="密码">
    </div>
    <div class="control">
-     <input  type="checkbox" v-model="remember">记住我 &nbsp;&nbsp;忘记密码
+     <input  type="checkbox" v-model="remember">记住我 &nbsp;&nbsp;<router-link to="/forgetpass">忘记密码</router-link>
    </div>
    <div class="control">
      <input  type="checkbox" v-model="agree">&nbsp;同意 《合作协议》
@@ -20,6 +20,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+import router from "../../router";
 export default {
   data() {
     return {
@@ -39,6 +40,7 @@ export default {
       this.remember = true;
     }
   },
+  props: ["perinfo"],
   methods: {
     myfocus(e) {
       if (e.target.dataset.status === "1") {
@@ -74,8 +76,10 @@ export default {
           agent_password: this.password
         },
         sCallback: function(res) {
-          console.log(res);
-        }
+          localStorage.login = 1;
+          this.$emit("getperinfo", res);
+          router.push("/personal");
+        }.bind(this)
       });
     }
   }

@@ -8,7 +8,7 @@ exports.install = function (vue, options) {
         Vue.http.post(myurl, params.data).then(response => {
             // success callback
             response = response.body;
-            if (response.code === 200) {
+            if (response.code === "200") {
                 params.sCallback && params.sCallback(response.data);
             } else {
                 params.eCallback && params.eCallback(response);

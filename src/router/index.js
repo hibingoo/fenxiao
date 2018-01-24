@@ -8,6 +8,8 @@ import perInfo from "../components/perInfo/perInfo";
 import myProfit from "../components/myProfit/myProfit";
 import dailyData from "../components/dailyData/dailyData";
 import land from "../components/land/land";
+import modepass from "../components/modepass/modepass";
+import forgetpass from "../components/forgetpass/forgetpass";
 
 Vue.use(Router);
 
@@ -20,7 +22,9 @@ export default new Router({
     { path: "/perInfo", name: "perInfo", component: perInfo },
     { path: "/myProfit", name: "myProfit", component: myProfit },
     { path: "/dailyData", name: "dailyData", component: dailyData },
-    { path: "/land", name: "land", component: land }
+    { path: "/land", name: "land", component: land },
+    { path: "/modepass", name: "modepass", component: modepass },
+    { path: "/forgetpass", name: "forgetpass", component: forgetpass }
   ],
   linkActiveClass: "active"
 });

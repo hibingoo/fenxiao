@@ -13,6 +13,11 @@ Vue.prototype.GLOBAL = global_;
 Vue.config.productionTip = false;
 Vue.use(vueResource);
 Vue.use(base);
+Vue.http.options.emulateJSON = true;
+Vue.http.options.header = {
+  "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+};
+/* eslint-disable no-new */
 
 Vue.directive("title", {
   inserted: function (el, binding) {

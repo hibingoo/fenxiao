@@ -2,22 +2,24 @@
  <div v-title="'个人中心'" class="page">
      <div class="title">
        <span>我的信息</span>
-       <span>修改密码</span>
+       <span>
+         <router-link to="/modepass">修改密码</router-link>
+         </span>
      </div>
      <div class="info">
        <div class="basmsg">账户信息</div>
        <div class="info-detail">
          <ul>
-           <li>UID:123456</li>
-           <li>代理UID:1453442</li>
-           <li>手机号：15775958312</li>
-           <li>账户(元)：0.0</li>
+           <li>UID:{{perinfo.user_uid}}</li>
+           <li>代理UID:{{perinfo.superior_uid}}</li>
+           <li>手机号：{{perinfo.user_phone}}</li>
+           <li>账户(元)：{{perinfo.agent_account}}</li>
          </ul>
          <ul>
-           <li>真实姓名:测试</li>
-           <li>绑定微信：未绑定</li>
-           <li>状态：正常</li>
-           <li>冻结(元)：0.0</li>
+           <li>真实姓名:{{perinfo.agent_name}}</li>
+           <!-- <li>绑定微信：未绑定</li> -->
+           <li>状态：{{status[Number(perinfo.agent_status)-1]}}</li>
+           <!-- <li>冻结(元)：0.0</li> -->
          </ul>
          <div class="clearfix"></div>
        </div>
@@ -36,16 +38,31 @@
        <img src="./playerList.png" alt="">
        玩家列表</router-link>
      </div>
+     <div class="login" @click="dropout">退 出 登 录</div>
  </div>
 </template>
 
 <script type="text/ecmascript-6">
+import router from "../../router";
 export default {
   name: "personal",
   data() {
-    return {};
+    return {
+      status: ["申请中", "正常", "冻结"]
+    };
   },
-  components: {}
+  components: {},
+  props: {
+    perinfo: {
+      type: Object
+    }
+  },
+  methods: {
+    dropout() {
+      localStorage.removeItem("login");
+      router.push("/land");
+    }
+  }
 };
 </script>
 
@@ -112,4 +129,14 @@ export default {
         left 50%
         top 6px
         margin-left -15px
+  .login
+    width 80%
+    height 40px
+    line-height 40px
+    color #fff
+    background #F05050
+    margin 20px auto
+    border-radius 18px
+    font-weight 600
+    text-align center
 </style>
