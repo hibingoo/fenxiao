@@ -19,7 +19,7 @@
            <li>真实姓名:{{perinfo.agent_name}}</li>
            <!-- <li>绑定微信：未绑定</li> -->
            <li>状态：{{status[Number(perinfo.agent_status)-1]}}</li>
-           <!-- <li>冻结(元)：0.0</li> -->
+           <li>冻结(元)：{{perinfo.agent_cash}}</li>
          </ul>
          <div class="clearfix"></div>
        </div>

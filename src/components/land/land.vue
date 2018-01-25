@@ -2,11 +2,11 @@
  <div class="page" v-title="'登录'">
    <div class="title">Username</div>
    <div class="box" :class="blue1">
-     <input type="text" v-model="account" data-status="1" @focus="myfocus" @blur="myblur" placeholder="账户(你注册的游戏ID)">
+     <input type="text" v-model="account" data-status="1" placeholder="账户(你注册的游戏ID)">
    </div>
    <div class="title">Password</div>
    <div class="box" :class="blue2">
-     <input type="password" v-model="password" data-status="2" @focus="myfocus" @blur="myblur" placeholder="密码">
+     <input type="password" v-model="password" data-status="2"  placeholder="密码">
    </div>
    <div class="control">
      <input  type="checkbox" v-model="remember">记住我 &nbsp;&nbsp;<router-link to="/forgetpass">忘记密码</router-link>
@@ -37,24 +37,49 @@ export default {
   created() {
     if (localStorage.account) {
       this.account = localStorage.account;
+      this.password = localStorage.password;
       this.remember = true;
     }
   },
   props: ["perinfo"],
   methods: {
-    myfocus(e) {
-      if (e.target.dataset.status === "1") {
-        this.blue1 = "blue";
-      } else if (e.target.dataset.status === "2") {
-        this.blue2 = "blue";
+    // myfocus(e) {
+    //   if (e.target.dataset.status === "1") {
+    //     this.blue1 = "blue";
+    //   } else if (e.target.dataset.status === "2") {
+    //     this.blue2 = "blue";
+    //   }
+    // },
+    // myblur(e) {
+    //   if (e.target.dataset.status === "1") {
+    //     this.blue1 = "";
+    //   } else if (e.target.dataset.status === "2") {
+    //     this.blue2 = "";
+    //   }
+    // },
+    // 为时间前面加0
+    add0(num) {
+      if (num >= 1 && num <= 9) {
+        num = "0" + num;
       }
+      return num;
     },
-    myblur(e) {
-      if (e.target.dataset.status === "1") {
-        this.blue1 = "";
-      } else if (e.target.dataset.status === "2") {
-        this.blue2 = "";
-      }
+    // 获取当前时间，以YY-MM-DD HH:MM:SS格式
+    getnow() {
+      let time = new Date();
+      let now =
+        time.getFullYear() +
+        "-" +
+        this.add0(time.getMonth() + 1) +
+        "-" +
+        time.getDate() +
+        " " +
+        this.add0(time.getHours()) +
+        ":" +
+        this.add0(time.getMinutes()) +
+        ":" +
+        this.add0(time.getSeconds());
+      return now;
     },
     login() {
       if (this.agree === false) {
@@ -65,8 +90,10 @@ export default {
       }
       if (this.remember === true) {
         localStorage.account = this.account;
+        localStorage.password = this.password;
       } else {
         localStorage.removeItem("account");
+        localStorage.removeItem("password");
       }
 
       this.baserequest({
@@ -77,8 +104,14 @@ export default {
         },
         sCallback: function(res) {
           localStorage.login = 1;
+          res.login_time = this.getnow();
           this.$emit("getperinfo", res);
           router.push("/personal");
+        }.bind(this),
+        eCallback: function(res) {
+          if (res.code === "400") {
+            this.showtitle = "账号密码不匹配";
+          }
         }.bind(this)
       });
     }
@@ -98,15 +131,16 @@ export default {
     color #333
     margin-bottom 15px
   .box
-    border solid 1px #ddd
-    border-radius 10px
     margin-bottom 30px
-    padding 10px 8px 10px 37px
+    width 300px
+    border-radius 10px
     input
-      width 100%
-      height 100%
-      border 0
-      outline none
+      border solid 1px #ddd
+      width 255px
+      padding 10px 8px 10px 37px
+      border-radius 10px
+      &:focus
+        border 1px solid #3bb4f2
   .blue
     border-color rgb(59, 180, 242)
   .control

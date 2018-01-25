@@ -30,6 +30,9 @@ export default {
     },
     // 验证登录
     verlogin() {
+      if (!this.perinfo.user_uid) {
+        localStorage.removeItem("login");
+      }
       if (localStorage.login) {
         this.login = localStorage.login;
       } else {
@@ -38,7 +41,7 @@ export default {
     }
   },
   watch: {
-    $route: function() {
+    $route: function(e) {
       this.verlogin();
     },
     login: function(val) {

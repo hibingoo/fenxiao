@@ -10,6 +10,7 @@ import dailyData from "../components/dailyData/dailyData";
 import land from "../components/land/land";
 import modepass from "../components/modepass/modepass";
 import forgetpass from "../components/forgetpass/forgetpass";
+import presentRec from "../components/presentRec/presentRec";
 
 Vue.use(Router);
 
@@ -24,7 +25,8 @@ export default new Router({
     { path: "/dailyData", name: "dailyData", component: dailyData },
     { path: "/land", name: "land", component: land },
     { path: "/modepass", name: "modepass", component: modepass },
-    { path: "/forgetpass", name: "forgetpass", component: forgetpass }
+    { path: "/forgetpass", name: "forgetpass", component: forgetpass },
+    { path: "/presentRec", name: "presentRec", component: presentRec }
   ],
   linkActiveClass: "active"
 });
