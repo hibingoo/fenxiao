@@ -3,11 +3,11 @@
     <div class="title">
       <span>余额提现</span>
       <span>
-        <router-link to="/modepass">提现记录:</router-link>
+        <router-link to="/presentRec">提现记录:</router-link>
       </span>
     </div>
     <div class="box">
-      <div class="balance">可用余额：0.0元</div>
+      <div class="balance">可用余额：{{balance}}元</div>
       <div class="list">
         <div class="title">
           <span>*</span>
@@ -18,14 +18,14 @@
         </div>
       </div>
       <div class="list">
-        <div class="title">
+        <div class="title">+
           <span>*</span>
           密码:
         </div>
         <div class="input-box">
           <input type="text">
         </div>
-      </div>  
+      </div>
       <div class="list">
         <div class="title">
           <span>*</span>
@@ -34,7 +34,10 @@
         <div class="input-box">
           <input type="text">
         </div>
-      </div>            
+      </div>
+    </div>
+    <div class="withdraw">确 定 提 现
+      <div class="remind" v-html="remind" v-if="remind!==''"></div>
     </div>
  </div>
 </template>
@@ -43,48 +46,73 @@
 export default {
   name: "withdraw",
   data() {
-    return {};
+    return {
+      balance: Number,
+      remind: ""
+    };
+  },
+  props: {
+    perinfo: {
+      type: Object
+    }
+  },
+  created() {
+    this.balance =
+      Number(this.perinfo.agent_account) - Number(this.perinfo.agent_cash);
   },
   components: {}
 };
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-  .page
-    &>.title
-      padding 15px 20px
-      background rgb(239, 238, 240)
-      display flex
-      font-size 14px
-      span
-        flex 1
-        &:last-child
-          text-align right
+.page
+  &>.title
+    padding 15px 20px
+    background rgb(239, 238, 240)
+    display flex
+    font-size 14px
+    span
+      flex 1
+      &:last-child
+        text-align right
   .box
     margin 7% 0 0 5%
-    line-height 1.6 
+    line-height 1.6
     .balance
       padding-left 30px
-      color #ff0000      
-    .list 
-      margin-top 30px 
-      text-align right 
+      color #ff0000
+    .list
+      margin-top 30px
+      text-align right
       display flex
       height 30px
       line-height 30px
       .title
         flex 0 0 80px
-        span 
+        span
           color #ff0000
-      .input-box
-        flex 0 0 58%
-        margin-left 5px 
-        input 
-          width 100%
-          height 100%
-          border 1px solid #ddd 
-          border-radius 5px 
-          &:focus
-            border 1px solid #3bb4f2
-
+    .input-box
+      flex 0 0 58%
+      margin-left 5px
+      input
+        width 100%
+        height 100%
+        border 1px solid #ddd
+        border-radius 5px
+        &:focus
+          border 1px solid #3bb4f2
+  .withdraw
+    position relative
+    text-align center
+    width 60%
+    height 41px
+    line-height 41px
+    background #46a0df
+    margin 60px auto
+    color #fff
+    border-radius 5px
+    .remind
+      color #ff0000
+      position absolute
+      top -41px
 </style>
