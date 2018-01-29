@@ -5,6 +5,7 @@ import global_ from "./global";
 exports.install = function (vue, options) {
     Vue.prototype.baserequest = (params) => {
         let myurl = global_.severSrc + "/api.php/" + params.url;
+        params.data.token = global_.token;
         Vue.http.post(myurl, params.data).then(response => {
             // success callback
             response = response.body;

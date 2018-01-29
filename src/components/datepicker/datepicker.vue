@@ -58,16 +58,24 @@ export default {
   props: {
     newdate: {
       type: String
+    },
+    beforeday: {
+      type: String
     }
   },
   watch: {
-    newdate:function(val){
-        console.log(val)
-        let mydate=val.split("-");
-        this.year=Number(mydate[0]);
-        this.month=Number(mydate[1]);
-        this.day=Number(mydate[2]);
-    },  
+    newdate: function(val) {
+      let mydate = val.split("-");
+      this.year = Number(mydate[0]);
+      this.month = Number(mydate[1]);
+      this.day = Number(mydate[2]);
+    },
+    beforeday: function(val) {
+      let mydate = val.split("-");
+      this.year = Number(mydate[0]);
+      this.month = Number(mydate[1]);
+      this.day = Number(mydate[2]);
+    },
     year: function(val) {
       let reg = /^[1-9]\d*$/g;
       if (!reg.test(val)) {
@@ -238,79 +246,79 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 .date-pickers
-    display inline-block
-    width 280px
+  display inline-block
+  width 280px
+  padding 5px
+  position relative
+  &>input
+    width 50%
+    height 20px
     padding 5px
-    position relative
-    &>input
-        width 50%
-        height 20px
-        padding 5px
-        border 1px solid #ddd
-    .fade-enter-active, .fade-leave-active
-        transition all 0.5s
-    .fade-enter, .fade-leave-active
-        opacity 0
-        transform translateY(-10px)
-    &>div
-        width 100%
-        border 1px solid #EAEAEA
-        border-radius 5px
-        box-shadow 2px 2px 2px #eee
+    border 1px solid #ddd
+  .fade-enter-active, .fade-leave-active
+    transition all 0.5s
+  .fade-enter, .fade-leave-active
+    opacity 0
+    transform translateY(-10px)
+  &>div
+    width 100%
+    border 1px solid #EAEAEA
+    border-radius 5px
+    box-shadow 2px 2px 2px #eee
+    background white
+    position absolute
+    top 50px
+    left 0px
+    z-index 99
+    div.day-select
+      display flex
+      padding 5px 0
+      height 30px
+      line-height 30px
+      color #888888
+      border-bottom 1px solid #ccc
+      input, button
+        border none
         background white
-        position absolute
-        top 50px
-        left 0px
-        z-index 99
-        div.day-select
-            display flex
-            padding 5px 0
-            height 30px
-            line-height 30px
-            color #888888
-            border-bottom 1px solid #ccc
-            input, button
-                border none
-                background white
-                text-align center
-                color #888888
-                cursor pointer
-            &>div:nth-child(1), >div:nth-child(3)
-                width 20%
-            &>div:nth-child(2)
-                width 60%
-                display flex
-                justify-content center
-                input:hover
-                    background #eee
-                input:nth-child(1)
-                    width 50px
-                input:nth-child(2)
-                    width 30px
-        div.day-screen
-            &>div
-                width 280px
-                padding 0 5px
-                display flex
-                font-size 14px
-                justify-content flex-start
-                flex-wrap wrap
-                span
-                    width 40px
-                    height 40px
-                    text-align center
-                    line-height 40px
-                    border-bottom 1px solid #ccc
-            &>div:nth-child(1)
-                font-weight bold
-                background #F8F8F8
-            &>div:nth-child(2)
-                span
-                    cursor pointer
-                    color black
-                    &:hover, &.active
-                        background #21A5EF
-                        color white
-                span.previousMonth, span.nextMonth
-                    color #888888
+        text-align center
+        color #888888
+        cursor pointer
+      &>div:nth-child(1), >div:nth-child(3)
+        width 20%
+      &>div:nth-child(2)
+        width 60%
+        display flex
+        justify-content center
+        input:hover
+          background #eee
+        input:nth-child(1)
+          width 50px
+        input:nth-child(2)
+          width 30px
+    div.day-screen
+      &>div
+        width 280px
+        padding 0 5px
+        display flex
+        font-size 14px
+        justify-content flex-start
+        flex-wrap wrap
+        span
+          width 40px
+          height 40px
+          text-align center
+          line-height 40px
+          border-bottom 1px solid #ccc
+      &>div:nth-child(1)
+        font-weight bold
+        background #F8F8F8
+      &>div:nth-child(2)
+        span
+          cursor pointer
+          color black
+          &:hover, &.active
+            background #21A5EF
+            color white
+        span.previousMonth, span.nextMonth
+          color #888888
 </style>

@@ -3,7 +3,7 @@
     <div class="title">
       <span>余额提现</span>
       <span>
-        <router-link to="/presentRec">提现记录:</router-link>
+        <router-link to="/presentRec">提现记录</router-link>
       </span>
     </div>
     <div class="box">
@@ -14,16 +14,16 @@
           提现金额:
         </div>
         <div class="input-box">
-          <input type="text">
+          <input type="number" v-model="amount">
         </div>
       </div>
       <div class="list">
-        <div class="title">+
+        <div class="title">
           <span>*</span>
           密码:
         </div>
         <div class="input-box">
-          <input type="text">
+          <input type="password" v-model="password">
         </div>
       </div>
       <div class="list">
@@ -32,11 +32,11 @@
           确认密码:
         </div>
         <div class="input-box">
-          <input type="text">
+          <input type="password" v-model="surepassword">
         </div>
       </div>
     </div>
-    <div class="withdraw">确 定 提 现
+    <div class="withdraw" @click="withdraw">确 定 提 现
       <div class="remind" v-html="remind" v-if="remind!==''"></div>
     </div>
  </div>
@@ -48,7 +48,11 @@ export default {
   data() {
     return {
       balance: Number,
-      remind: ""
+      remind: "",
+      amount: null,
+      password: "",
+      surepassword: "",
+      frozen: ""
     };
   },
   props: {
@@ -60,7 +64,55 @@ export default {
     this.balance =
       Number(this.perinfo.agent_account) - Number(this.perinfo.agent_cash);
   },
-  components: {}
+  components: {},
+  watch: {
+    amount: function(val) {
+      if (val > this.balance) {
+        this.remind = "提现金额不能大于可用余额";
+        this.amount = this.balance;
+      }
+    },
+    surepassword: function(val) {
+      if (val !== this.password) {
+        this.remind = "密码不一致";
+      } else {
+        this.remind = "";
+      }
+    }
+  },
+  methods: {
+    withdraw() {
+      console.log(this.amount);
+      if (
+        this.password === "" ||
+        this.surepassword === "" ||
+        this.password !== this.surepassword
+      ) {
+        this.remind = "密码不能为空";
+        return;
+      }
+      if (!this.amount) {
+        this.remind = "提现金额不能为空";
+        return;
+      }
+      this.baserequest({
+        url: "Spread/withdrawCash",
+        data: {
+          money: this.amount,
+          password: this.password
+        },
+        sCallback: function(res) {
+          this.balance = this.balance - this.amount;
+          this.frozen = this.amount;
+          console.log(this.frozen);
+          this.$emit("getfrozen", this.frozen);
+          this.amount = null;
+          this.password = "";
+          this.surepassword = "";
+        }.bind(this)
+      });
+    }
+  }
 };
 </script>
 

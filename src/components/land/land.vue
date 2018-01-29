@@ -104,6 +104,7 @@ export default {
         },
         sCallback: function(res) {
           localStorage.login = 1;
+          sessionStorage.token = res.token;
           res.login_time = this.getnow();
           this.$emit("getperinfo", res);
           router.push("/personal");

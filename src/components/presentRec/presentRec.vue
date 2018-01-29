@@ -21,9 +21,22 @@
 <script type="text/ecmascript-6">
 export default {
   data() {
-    return {};
+    return {
+      record: {}
+    };
   },
-  components: {}
+  components: {},
+  created() {
+    this.baserequest({
+      url: "Spread/withdrawCashList",
+      data: {},
+      sCallback: function(res) {
+        for(let i=0;i<res.length;i++){
+            
+        }
+      }
+    });
+  }
 };
 </script>
 

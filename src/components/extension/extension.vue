@@ -2,9 +2,9 @@
   <div class="page" v-title="'我的推广'">
     <div class="title">我的推广</div>
     <div class="person">
-      <div>今日绑定数:</div>
-      <div>本月绑定数:</div>
-      <div>总绑定数:</div>
+      <div>今日绑定数:{{extension.curDayPerson}}</div>
+      <div>本月绑定数:{{extension.curMonthPerson}}</div>
+      <div>总绑定数:{{extension.totalPerson}}</div>
     </div>
     <div class="ul">
       <ul class="agent">
@@ -15,9 +15,9 @@
       </ul>
       <ul class="profit">
         <li>今日/总收益</li>
-        <li></li>
-        <li></li>
-        <li></li>
+        <li>{{extension.agentlevel1CurDayMoney}}元/{{extension.agentlevel1TotalMoney}}元</li>
+        <li>{{extension.agentlevel2CurDayMoney}}元/{{extension.agentlevel2TotalMoney}}元</li>
+        <li>{{extension.agentlevel3CurDayMoney}}元/{{extension.agentlevel3TotalMoney}}元</li>
       </ul>
       <ul class="user">
         <li>今日/总用户数</li>
@@ -33,9 +33,27 @@
 export default {
   name: "extension",
   data() {
-    return {};
+    return {
+      extension: {}
+    };
   },
-  components: {}
+  props: {
+    perinfo: {
+      type: Object
+    }
+  },
+  components: {},
+  created() {
+    this.baserequest({
+      url: "Spread/getInfo",
+      data: {
+        user_uid: this.perinfo.user_uid
+      },
+      sCallback: function(res) {
+        this.extension = res;
+      }.bind(this)
+    });
+  }
 };
 </script>
 

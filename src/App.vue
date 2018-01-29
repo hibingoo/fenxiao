@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view @getperinfo="getperinfo" :perinfo="perinfo"/>
+    <router-view @getperinfo="getperinfo" :perinfo="perinfo" @getfrozen="getfrozen"/>
     <v-footer v-if="login==='1'"></v-footer>
   </div>
 </template>
@@ -27,6 +27,10 @@ export default {
     getperinfo(data) {
       this.perinfo = data;
       console.log(data);
+    },
+    getfrozen(data) {
+      console.log(data);
+      this.perinfo.agent_cash = Number(this.perinfo.agent_cash) + Number(data);
     },
     // 验证登录
     verlogin() {

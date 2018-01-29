@@ -49,18 +49,18 @@ export default {
       &:focus
         border 1px solid #46A0DF
     button
-      height 34px
+      height 30px
       width 25%
       background #46A0DF
       border #46A0DF
       color #fff
       border-radius 5px
   .table
-    margin 8px 
+    margin 8px
     table
       width 100%
-      th,td
-        width 24%  
-        line-height 1.6 
+      th, td
+        width 24%
+        line-height 1.6
         padding 8px 0
 </style>

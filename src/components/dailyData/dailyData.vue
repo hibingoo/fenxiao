@@ -2,9 +2,9 @@
  <div class="page" v-title="'每日数据'">
    <div class="title">每日数据</div>
    <div class="box">
-     <div class="time">时间:<datePickers @getDate="getDate" :newdate="today"></datePickers>
+     <div class="time">时间:<datePickers @getDate="getDate" :newdate="today" :beforeday="beforeday"></datePickers>
        <button class="today" @click="getToday">今天</button>
-       <button class="before">前一天</button>
+       <button class="before" @click="getbeforeday">前一天</button>
      </div>
      <div class="list">组局数：
      </div>
@@ -41,7 +41,8 @@ export default {
   data() {
     return {
       date: "",
-      today: ""
+      today: "",
+      beforeday: ""
     };
   },
   components: {
@@ -59,8 +60,22 @@ export default {
         this.add0(time.getMonth() + 1) +
         "-" +
         time.getDate();
-      this.today = now;
-      console.log(now);
+      let timestamp = Date.parse(new Date());
+      this.today = now + "-" + timestamp;
+    },
+    // 获取前一天
+    getbeforeday() {
+      let date = this.date + " " + "00:00:00";
+      let time = new Date(Date.parse(date) - 86400000);
+      console.log(time);
+      let now =
+        time.getFullYear() +
+        "-" +
+        this.add0(time.getMonth() + 1) +
+        "-" +
+        time.getDate();
+      let timestamp = Date.parse(new Date());
+      this.beforeday = now + "-" + timestamp;
     },
     add0(num) {
       if (num >= 1 && num <= 9) {
