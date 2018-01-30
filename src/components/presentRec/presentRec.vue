@@ -8,10 +8,10 @@
                  <th class="withdraw">提现金额</th>
                  <th class="status">状态</th>
              </tr>
-             <tr>
-                 <td>1</td>
-                 <td>2</td>
-                 <td>3</td>
+             <tr v-if="record" v-for="item in record">
+                 <td>{{item.time}}</td>
+                 <td>{{item.agent_money}}</td>
+                 <td>{{status[Number(item.status)]}}</td>
              </tr>
          </table>
      </div>
@@ -19,22 +19,65 @@
 </template>
 
 <script type="text/ecmascript-6">
+var page;
 export default {
   data() {
     return {
-      record: {}
+      record: [],
+      status: ["提现失败", "提现申请中", "提现成功"]
     };
+  },
+  methods: {
+    // 传入时间戳，格式化时间
+    gettime(time) {
+      let mytime = new Date(time);
+      let date =
+        mytime.getFullYear() +
+        "-" +
+        this.add0(mytime.getMonth() + 1) +
+        "-" +
+        this.add0(mytime.getDay());
+      return date;
+    },
+    add0(num) {
+      if (num >= 1 && num <= 9) {
+        num = "0" + num;
+      }
+      return num;
+    }
+  },
+  mounted() {
+    this.onbottom(
+      function() {
+        this.baserequest({
+          url: "Spread/withdrawCashList",
+          data: {
+            page: page++
+          },
+          sCallback: function(res) {
+            for (let i = 0; i < res.length; i++) {
+              res[i].time = this.gettime(Number(res[i].time) * 1000);
+            }
+            this.record = this.record.concat(res);
+          }.bind(this)
+        });
+      }.bind(this)
+    );
   },
   components: {},
   created() {
+    page = 1;
     this.baserequest({
       url: "Spread/withdrawCashList",
-      data: {},
+      data: {
+        page: page++
+      },
       sCallback: function(res) {
-        for(let i=0;i<res.length;i++){
-            
+        for (let i = 0; i < res.length; i++) {
+          res[i].time = this.gettime(Number(res[i].time) * 1000);
         }
-      }
+        this.record = this.record.concat(res);
+      }.bind(this)
     });
   }
 };
@@ -55,6 +98,7 @@ export default {
     .table
         width 95%
         margin 30px auto
+        padding-bottom 52px
         table
             width 100%
             border-collapse collapse
@@ -65,12 +109,12 @@ export default {
                 padding 8px 0
                 text-align center
             .applytime
-                width 40%
+                width 30%
                 font-weight 600
             .withdraw
-                width 40%
+                width 30%
                 font-weight 600
             .status
-                width 20%
+                width 40%
                 font-weight 600
 </style>

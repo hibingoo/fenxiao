@@ -6,10 +6,10 @@
        <button class="today" @click="getToday">今天</button>
        <button class="before" @click="getbeforeday">前一天</button>
      </div>
-     <div class="list">组局数：
+     <!-- <div class="list">组局数：
      </div>
      <div class="list">消耗：0 钻
-     </div>
+     </div> -->
    </div>
    <div class="table">
      <table>
@@ -21,29 +21,44 @@
        </tr>
        <tr>
          <td>绑定人数(人)</td>
-         <td></td>
-         <td></td>
-         <td></td>
+         <td>{{dayinfo.level1Preson}}</td>
+         <td>{{dayinfo.level2Preson}}</td>
+         <td>{{dayinfo.level3Preson}}</td>
        </tr>
        <tr>
          <td>收益(元)</td>
+         <td>{{dayinfo.agentlevel1Money}}</td>
+         <td>{{dayinfo.agentlevel1Money}}</td>
+         <td>{{dayinfo.agentlevel1Money}}</td>         
        </tr>
      </table>
    </div>
-    
-
  </div>
 </template>
 
 <script type="text/ecmascript-6">
 import datePickers from "../datepicker/datepicker";
+import { setTimeout } from 'timers';
 export default {
   data() {
     return {
       date: "",
       today: "",
-      beforeday: ""
+      beforeday: "",
+      dayinfo:{},
     };
+  },
+  created () {
+    let today=this.getToday();
+    this.baserequest({
+      url:"Spread/dayInfo",
+      data:{
+        date:today
+      },
+      sCallback:function(res){
+        this.dayinfo=res;
+      }.bind(this)
+    })
   },
   components: {
     datePickers: datePickers
@@ -62,12 +77,12 @@ export default {
         time.getDate();
       let timestamp = Date.parse(new Date());
       this.today = now + "-" + timestamp;
+      return now
     },
     // 获取前一天
     getbeforeday() {
       let date = this.date + " " + "00:00:00";
       let time = new Date(Date.parse(date) - 86400000);
-      console.log(time);
       let now =
         time.getFullYear() +
         "-" +
@@ -82,6 +97,19 @@ export default {
         num = "0" + num;
       }
       return num;
+    }
+  },
+  watch: {
+    date:function(time){
+      this.baserequest({
+        url:"Spread/dayInfo",
+        data:{
+          date:time
+        },
+        sCallback:function(res){
+          this.dayinfo=res;
+        }.bind(this)
+      })
     }
   }
 };

@@ -6,6 +6,7 @@ import router from "./router";
 import vueResource from "vue-resource";
 import base from "./common/js/base.js";
 import global_ from "./common/js/global";
+import buttomCon from "./common/js/buttomCon.js";
 
 import "./common/stylus/index.styl";
 
@@ -13,6 +14,7 @@ Vue.prototype.GLOBAL = global_;
 Vue.config.productionTip = false;
 Vue.use(vueResource);
 Vue.use(base);
+Vue.use(buttomCon);
 Vue.http.options.emulateJSON = true;
 Vue.http.options.header = {
   "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"

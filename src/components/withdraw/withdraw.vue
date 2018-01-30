@@ -82,7 +82,6 @@ export default {
   },
   methods: {
     withdraw() {
-      console.log(this.amount);
       if (
         this.password === "" ||
         this.surepassword === "" ||

@@ -14,16 +14,16 @@
         <li>三级代理</li>
       </ul>
       <ul class="profit">
-        <li>今日/总收益</li>
-        <li>{{extension.agentlevel1CurDayMoney}}元/{{extension.agentlevel1TotalMoney}}元</li>
-        <li>{{extension.agentlevel2CurDayMoney}}元/{{extension.agentlevel2TotalMoney}}元</li>
-        <li>{{extension.agentlevel3CurDayMoney}}元/{{extension.agentlevel3TotalMoney}}元</li>
+        <li>今日收益</li>
+        <li>{{extension.agentlevel1CurDayMoney}}元</li>
+        <li>{{extension.agentlevel2CurDayMoney}}元</li>
+        <li>{{extension.agentlevel3CurDayMoney}}元</li>
       </ul>
       <ul class="user">
-        <li>今日/总用户数</li>
-        <li></li>
-        <li></li>
-        <li></li>
+        <li>总收益</li>
+        <li>{{extension.agentlevel1TotalMoney}}元</li>
+        <li>{{extension.agentlevel2TotalMoney}}元</li>
+        <li>{{extension.agentlevel3TotalMoney}}元</li>
       </ul>
     </div>
   </div>

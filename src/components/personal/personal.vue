@@ -34,9 +34,9 @@
        <router-link to="/perInfo">
        <img src="./perInfo.png" alt="">
        个人信息</router-link>
-       <router-link to="/playerList">
+       <!-- <router-link to="/playerList">
        <img src="./playerList.png" alt="">
-       玩家列表</router-link>
+       玩家列表</router-link> -->
      </div>
      <div class="login" @click="dropout">退 出 登 录</div>
  </div>

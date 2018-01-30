@@ -47,6 +47,12 @@ export default {
       monthDay: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
     };
   },
+  created() {
+    let today = this.getToday().split("-");
+    this.year = Number(today[0]);
+    this.month = Number(today[1]);
+    this.day = Number(today[2]);
+  },
   computed: {
     date() {
       if (this.year === 0 || this.month === 0 || this.day === 0) {
@@ -109,6 +115,24 @@ export default {
     }
   },
   methods: {
+    getToday() {
+      let time = new Date();
+      let now =
+        time.getFullYear() +
+        "-" +
+        this.add0(time.getMonth() + 1) +
+        "-" +
+        time.getDate();
+      let timestamp = Date.parse(new Date());
+      now = now + "-" + timestamp;
+      return now;
+    },
+    add0(num) {
+      if (num >= 1 && num <= 9) {
+        num = "0" + num;
+      }
+      return num;
+    },
     // 突出显示当前日期
     isActive(index) {
       if (index === this.day) {
