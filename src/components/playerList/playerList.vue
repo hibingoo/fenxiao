@@ -2,8 +2,8 @@
  <div class="page" v-title="'玩家列表'">
    <div class="title">玩家列表</div>
    <div class="search">
-     <input type="text" placeholder="输入 UID">
-     <button>搜索</button>
+     <input type="text" placeholder="输入 UID" v-model="user_uid">
+     <button @click="getperList">搜索</button>
    </div>
    <div class="table">
      <table >
@@ -14,6 +14,13 @@
          <th>是否代理</th>
          <th>总充值(元)</th>
        </tr>
+       <tr v-for="item in perList">
+         <td>{{item[0]}}</td>
+         <td>{{item[1]}}</td>
+         <td>{{item[2]}}</td>
+         <td>{{item[3]=="1" ? "是":"否"}}</td>
+         <td>{{item[4]}}</td>
+       </tr>
      </table>
    </div>
 
@@ -21,16 +28,90 @@
 </template>
 
 <script type="text/ecmascript-6">
+var page;
 export default {
   data() {
-    return {};
+    return {
+      perList: [],
+      user_uid: ""
+    };
   },
   props: {
     perinfo: {
       type: Object
     }
   },
-  components: {}
+  created() {
+    page = 1;
+    this.baserequest({
+      url: "spread/getLowerInfo",
+      data: {
+        page: page++,
+        user_uid: this.user_uid
+      },
+      sCallback: function(res) {
+        for (let i = 0; i < res.length; i++) {
+          res[i][2] = this.getnow(res[i][2]);
+        }
+        this.perList = res;
+      }.bind(this)
+    });
+  },
+  components: {},
+  methods: {
+    getperList() {
+      page = 1;
+      this.baserequest({
+        url: "spread/getLowerInfo",
+        data: {
+          page: page++,
+          user_uid: this.user_uid
+        },
+        sCallback: function(res) {
+          for (let i = 0; i < res.length; i++) {
+            res[i][2] = this.getnow(res[i][2]);
+          }
+          this.perList = res;
+        }.bind(this)
+      });
+    },
+    add0(num) {
+      if (num >= 1 && num <= 9) {
+        num = "0" + num;
+      }
+      return num;
+    },
+    // 获取当前时间，以YY-MM-DD HH:MM:SS格式
+    getnow(res) {
+      let time = new Date(Number(res)*1000);
+      let now =
+        time.getFullYear() +
+        "-" +
+        this.add0(time.getMonth() + 1) +
+        "-" +
+        time.getDate();
+      return now;
+    }
+  },
+  mounted() {
+    this.onbottom(
+      function() {
+        this.baserequest({
+          url: "spread/getLowerInfo",
+          data: {
+            page: page++,
+            user_uid: this.user_uid
+          },
+          sCallback: function(res) {
+            for (let i = 0; i < res.length; i++) {
+              res[i][2] = this.getnow(res[i][2]);
+            }
+            this.perList = this.perList.concat(res);
+          }.bind(this)
+        });
+      }.bind(this)
+    );
+  }
 };
 </script>
 

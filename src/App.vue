@@ -26,10 +26,8 @@ export default {
   methods: {
     getperinfo(data) {
       this.perinfo = data;
-      console.log(data);
     },
     getfrozen(data) {
-      console.log(data);
       this.perinfo.agent_cash = Number(this.perinfo.agent_cash) + Number(data);
     },
     // 验证登录
@@ -54,7 +52,6 @@ export default {
       }
     },
     router(e) {
-      console.log(e);
     }
   }
 };

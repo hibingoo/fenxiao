@@ -103,7 +103,6 @@ export default {
         sCallback: function(res) {
           this.balance = this.balance - this.amount;
           this.frozen = this.amount;
-          console.log(this.frozen);
           this.$emit("getfrozen", this.frozen);
           this.amount = null;
           this.password = "";

@@ -38,27 +38,27 @@
 
 <script type="text/ecmascript-6">
 import datePickers from "../datepicker/datepicker";
-import { setTimeout } from 'timers';
+import { setTimeout } from "timers";
 export default {
   data() {
     return {
       date: "",
       today: "",
       beforeday: "",
-      dayinfo:{},
+      dayinfo: {}
     };
   },
-  created () {
-    let today=this.getToday();
+  created() {
+    let today = this.getToday();
     this.baserequest({
-      url:"Spread/dayInfo",
-      data:{
-        date:today
+      url: "Spread/dayInfo",
+      data: {
+        date: today
       },
-      sCallback:function(res){
-        this.dayinfo=res;
+      sCallback: function(res) {
+        this.dayinfo = res;
       }.bind(this)
-    })
+    });
   },
   components: {
     datePickers: datePickers
@@ -77,7 +77,7 @@ export default {
         time.getDate();
       let timestamp = Date.parse(new Date());
       this.today = now + "-" + timestamp;
-      return now
+      return now;
     },
     // 获取前一天
     getbeforeday() {
@@ -100,16 +100,16 @@ export default {
     }
   },
   watch: {
-    date:function(time){
+    date: function(time) {
       this.baserequest({
-        url:"Spread/dayInfo",
-        data:{
-          date:time
+        url: "Spread/dayInfo",
+        data: {
+          date: time
         },
-        sCallback:function(res){
-          this.dayinfo=res;
+        sCallback: function(res) {
+          this.dayinfo = res;
         }.bind(this)
-      })
+      });
     }
   }
 };

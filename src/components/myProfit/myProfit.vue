@@ -41,7 +41,6 @@ export default {
   created() {
     page = 1;
     this.incomeInfo = this.getIncome();
-    console.log(this.incomeInfo);
   },
   name: "myProfit",
   components: {},

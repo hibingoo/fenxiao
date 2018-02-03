@@ -5,7 +5,7 @@
 </template>
 
 <script type = "text/ecmascript-6">
-const severSrc = "http://ces.fengtunote.com";
+const severSrc = "http://www.bashujiuzhou.com";
 export default {
   severSrc, // 服务器地址
 };
