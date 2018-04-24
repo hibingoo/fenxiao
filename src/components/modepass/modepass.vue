@@ -16,13 +16,14 @@
 
 <script type="text/ecmascript-6">
 import router from "../../router";
+import { setInterval, clearInterval } from "timers";
 export default {
   data() {
     return {
       oldpassword: "",
       newpassword: "",
       surepassword: "",
-      showtitle: ""
+      showtitle: "",
     };
   },
   props: {
@@ -57,7 +58,7 @@ export default {
           }
         }.bind(this)
       });
-    }
+    },
   }
 };
 </script>
@@ -90,4 +91,28 @@ export default {
     position absolute
     top 60px
     color #ff0000
+  .verbox
+    margin-bottom 30px
+    width 300px
+    display flex
+    .input
+      flex 0 0 60%
+      border 1px solid #ddd
+      padding 10px 2px 10px 37px
+      box-sizing border-box;
+      border-top-left-radius 10px
+      border-bottom-left-radius 10px
+      input
+        width 100%
+        height 100%
+    .button
+      flex 0 0 40%
+      background #eee
+      text-align center
+      line-height 38px
+      border-top-right-radius 10px
+      border-bottom-right-radius 10px
+      &.blue
+        background #46a0df
+        color #fff
 </style>

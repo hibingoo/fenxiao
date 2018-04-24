@@ -74,6 +74,8 @@ export default {
   display block
   position absolute
   top 0px
+  padding-bottom 52px 
+  box-sizing border-box
   .title
     padding 15px 20px
     background rgb(239, 238, 240)

@@ -9,17 +9,17 @@
      <table >
        <tr>
          <th>UID</th>
-         <th>昵称</th>
+         <th class="nickname">昵称</th>
          <th>绑定时间</th>
          <th>是否代理</th>
          <th>总充值(元)</th>
        </tr>
        <tr v-for="item in perList">
-         <td>{{item[0]}}</td>
-         <td>{{item[1]}}</td>
-         <td>{{item[2]}}</td>
-         <td>{{item[3]=="1" ? "是":"否"}}</td>
-         <td>{{item[4]}}</td>
+         <td>{{item.user_id}}</td>
+         <td>{{item.user_name}}</td>
+         <td>{{item.binding_time}}</td>
+         <td>{{item.is_agent=="1" ? "是":"否"}}</td>
+         <td>{{item.moeny}}</td>
        </tr>
      </table>
    </div>
@@ -51,7 +51,8 @@ export default {
       },
       sCallback: function(res) {
         for (let i = 0; i < res.length; i++) {
-          res[i][2] = this.getnow(res[i][2]);
+          res[i].user_uid=res[i].user_id;
+          res[i].binding_time= this.getnow(res[i].binding_time);
         }
         this.perList = res;
       }.bind(this)
@@ -69,7 +70,8 @@ export default {
         },
         sCallback: function(res) {
           for (let i = 0; i < res.length; i++) {
-            res[i][2] = this.getnow(res[i][2]);
+            res[i].user_uid=res[i].user_id;
+            res[i].binding_time= this.getnow(res[i].binding_time);
           }
           this.perList = res;
         }.bind(this)
@@ -104,7 +106,8 @@ export default {
           },
           sCallback: function(res) {
             for (let i = 0; i < res.length; i++) {
-              res[i][2] = this.getnow(res[i][2]);
+              res[i].user_uid=res[i].user_id;
+              res[i].binding_time= this.getnow(res[i].binding_time);
             }
             this.perList = this.perList.concat(res);
           }.bind(this)
@@ -148,7 +151,7 @@ export default {
       color #fff
       border-radius 5px
   .table
-    margin 30px 8px 0 8px
+    margin 30px 8px 52px 8px
     background #EDEDEA
     table
       width 100%
@@ -157,4 +160,6 @@ export default {
         width 20%
         text-align center
         color #666
+        .nickname
+          overflow hidden
 </style>

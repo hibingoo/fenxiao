@@ -21,15 +21,15 @@
        </tr>
        <tr>
          <td>绑定人数(人)</td>
-         <td>{{dayinfo.level1Preson}}</td>
-         <td>{{dayinfo.level2Preson}}</td>
-         <td>{{dayinfo.level3Preson}}</td>
+         <td>{{dayinfo.curDayAgent1BindNumber}}</td>
+         <td>{{dayinfo.curDayAgent2BindNumber}}</td>
+         <td>{{dayinfo.curDayAgent3BindNumber}}</td>
        </tr>
        <tr>
          <td>收益(元)</td>
-         <td>{{dayinfo.agentlevel1Money}}</td>
-         <td>{{dayinfo.agentlevel1Money}}</td>
-         <td>{{dayinfo.agentlevel1Money}}</td>         
+         <td>{{dayinfo.curDayAgent1Money}}</td>
+         <td>{{dayinfo.curDayAgent2Money}}</td>
+         <td>{{dayinfo.curDayAgent3Money}}</td>         
        </tr>
      </table>
    </div>

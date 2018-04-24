@@ -18,6 +18,9 @@
         <div class="dis">注册时间:{{perinfo.register_time}}</div>
         <div class="dis">登录时间:{{perinfo.login_time}}</div>
         <div class="dis">地址:{{perinfo.address}}</div>
+        <div class="entrance">
+          <router-link to="/banding_bank">绑定或修改银行卡号</router-link>
+          </div>
       </div>
     </div>
  </div>
@@ -82,4 +85,12 @@ export default {
       padding 5px 0
       line-height 1.6
       font-size 14px
+    .entrance
+      padding 5px 0
+      line-height 1.6
+      text-align center
+      text-decoration underline
+      color #707070
+      a
+        color #707070
 </style>

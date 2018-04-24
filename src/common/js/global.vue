@@ -5,7 +5,7 @@
 </template>
 
 <script type = "text/ecmascript-6">
-const severSrc = "http://www.bashujiuzhou.com";
+const severSrc = "http://admin.bashujiuzhou.com"
 export default {
   severSrc, // 服务器地址
 };
@@ -14,3 +14,4 @@ export default {
 <style>
 
 </style>
+

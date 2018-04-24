@@ -11,6 +11,7 @@ import land from "../components/land/land";
 import modepass from "../components/modepass/modepass";
 import forgetpass from "../components/forgetpass/forgetpass";
 import presentRec from "../components/presentRec/presentRec";
+import banding_bank from "../components/banding_bank/banding_bank";
 
 Vue.use(Router);
 
@@ -26,7 +27,8 @@ export default new Router({
     { path: "/land", name: "land", component: land },
     { path: "/modepass", name: "modepass", component: modepass },
     { path: "/forgetpass", name: "forgetpass", component: forgetpass },
-    { path: "/presentRec", name: "presentRec", component: presentRec }
+    { path: "/presentRec", name: "presentRec", component: presentRec },
+    { path: "/banding_bank", name: "banding_bank", component: banding_bank }
   ],
   linkActiveClass: "active"
 });

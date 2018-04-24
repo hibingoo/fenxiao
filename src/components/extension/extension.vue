@@ -2,9 +2,9 @@
   <div class="page" v-title="'我的推广'">
     <div class="title">我的推广</div>
     <div class="person">
-      <div>今日绑定数:{{extension.curDayPerson}}</div>
-      <div>本月绑定数:{{extension.curMonthPerson}}</div>
-      <div>总绑定数:{{extension.totalPerson}}</div>
+      <div>今日绑定数:{{extension.curDayAgentBindNumber}}</div>
+      <div>本月绑定数:{{extension.curMonthAgentBindNumber}}</div>
+      <div>总绑定数:{{extension.toatlAgentBindNumber}}</div>
     </div>
     <div class="ul">
       <ul class="agent">
@@ -14,16 +14,16 @@
         <li>三级代理</li>
       </ul>
       <ul class="profit">
-        <li>今日收益</li>
-        <li>{{extension.agentlevel1CurDayMoney}}元</li>
-        <li>{{extension.agentlevel2CurDayMoney}}元</li>
-        <li>{{extension.agentlevel3CurDayMoney}}元</li>
+        <li>今日/总收益</li>
+        <li>{{extension.curDayAgent1Money}}元/{{extension.totalAgent1Money}}元</li>
+        <li>{{extension.curDayAgent2Money}}元/{{extension.totalAgent2Money}}元</li>
+        <li>{{extension.curDayAgent3Money}}元/{{extension.totalAgent3Money}}元</li>
       </ul>
       <ul class="user">
-        <li>总收益</li>
-        <li>{{extension.agentlevel1TotalMoney}}元</li>
-        <li>{{extension.agentlevel2TotalMoney}}元</li>
-        <li>{{extension.agentlevel3TotalMoney}}元</li>
+        <li>今日/总用户数</li>
+        <li>{{extension.curDayAgent1BindNumber}}人/{{extension.toatlAgent1BindNumber}}人</li>
+        <li>{{extension.curDayAgent2BindNumber}}人/{{extension.toatlAgent2BindNumber}}人</li>
+        <li>{{extension.curDayAgent3BindNumber}}人/{{extension.toatlAgent3BindNumber}}人</li>
       </ul>
     </div>
   </div>

@@ -65,8 +65,12 @@ export default {
       return num;
     },
     // 获取当前时间，以YY-MM-DD HH:MM:SS格式
-    getnow() {
-      let time = new Date();
+    getnow(num) {
+      if(!num){
+        var time = new Date();
+      }else{
+        var time=new Date(Number(num))
+      }
       let now =
         time.getFullYear() +
         "-" +
@@ -87,6 +91,7 @@ export default {
       }
       if (this.account === "" || this.password === "") {
         this.showtitle = "账号或密码不能为空";
+        return;
       }
       if (this.remember === true) {
         localStorage.account = this.account;
@@ -105,6 +110,8 @@ export default {
         sCallback: function(res) {
           localStorage.login = 1;
           sessionStorage.token = res.token;
+          res.register_time=Number(res.register_time)*1000;
+          res.register_time=this.getnow(res.register_time)
           res.login_time = this.getnow();
           this.$emit("getperinfo", res);
           router.push("/personal");
@@ -115,7 +122,7 @@ export default {
           }
         }.bind(this)
       });
-    }
+    },
   }
 };
 </script>

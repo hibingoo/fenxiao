@@ -8,6 +8,9 @@
     </div>
     <div class="box">
       <div class="balance">可用余额：{{balance}}元</div>
+      <div class="balance" v-if="!perinfo.bank_card">
+        <router-link to="/banding_bank">还没有绑定银行卡，前往绑定</router-link>
+        </div>
       <div class="list">
         <div class="title">
           <span>*</span>
@@ -29,12 +32,21 @@
       <div class="list">
         <div class="title">
           <span>*</span>
+          银行卡号:
+        </div>
+        <div class="input-box">
+          <input type="text" v-model="bank_card" disabled>
+        </div>
+      </div>
+      <!-- <div class="list">
+        <div class="title">
+          <span>*</span>
           确认密码:
         </div>
         <div class="input-box">
           <input type="password" v-model="surepassword">
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="withdraw" @click="withdraw">确 定 提 现
       <div class="remind" v-html="remind" v-if="remind!==''"></div>
@@ -51,8 +63,9 @@ export default {
       remind: "",
       amount: null,
       password: "",
-      surepassword: "",
-      frozen: ""
+      // surepassword: "",
+      frozen: "",
+      bank_card:""
     };
   },
   props: {
@@ -61,8 +74,14 @@ export default {
     }
   },
   created() {
-    this.balance =
-      Number(this.perinfo.agent_account) - Number(this.perinfo.agent_cash);
+    var reg = /^(\d{4})\d+(\d{4})$/;
+    this.balance = (
+      Number(this.perinfo.agent_account) - Number(this.perinfo.agent_cash)
+    ).toFixed(2);
+    if(this.perinfo.bank_card){
+      this.bank_card=this.perinfo.bank_card.replace(reg,"$1****$2")
+    }
+    
   },
   components: {},
   watch: {
@@ -71,21 +90,25 @@ export default {
         this.remind = "提现金额不能大于可用余额";
         this.amount = this.balance;
       }
-    },
-    surepassword: function(val) {
-      if (val !== this.password) {
-        this.remind = "密码不一致";
-      } else {
-        this.remind = "";
-      }
     }
+    // surepassword: function(val) {
+    //   if (val !== this.password) {
+    //     this.remind = "密码不一致";
+    //   } else {
+    //     this.remind = "";
+    //   }
+    // }
   },
   methods: {
     withdraw() {
+      if(this.bank_card===""){
+        this.remind="请先绑定银行卡";
+        return;
+      }
       if (
-        this.password === "" ||
-        this.surepassword === "" ||
-        this.password !== this.surepassword
+        this.password === ""
+        // this.surepassword === "" ||
+        // this.password !== this.surepassword
       ) {
         this.remind = "密码不能为空";
         return;
@@ -101,8 +124,10 @@ export default {
           password: this.password
         },
         sCallback: function(res) {
-          this.balance = this.balance - this.amount;
-          this.frozen = this.amount;
+          this.balance = (Number(this.balance) - Number(this.amount)).toFixed(
+            2
+          );
+          this.frozen = Number(this.amount);
           this.$emit("getfrozen", this.frozen);
           this.amount = null;
           this.password = "";

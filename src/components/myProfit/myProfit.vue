@@ -14,9 +14,9 @@
         <th>时间</th>
       </tr>
       <tr v-for="item in incomeInfo">
-        <td>{{item.uid}}</td>
+        <td>{{item.user_id}}</td>
+        <td>{{item.total_price}}</td>
         <td>{{item.user_money}}</td>
-        <td>{{item.profit}}</td>
         <td>{{item.time}}</td>
       </tr>
     </table>
@@ -40,18 +40,24 @@ export default {
   },
   created() {
     page = 1;
-    this.incomeInfo = this.getIncome();
+    this.getIncome({
+      sCallback: function(res) {
+        this.incomeInfo = res;
+      }.bind(this)
+    });
   },
   name: "myProfit",
   components: {},
   methods: {
     query() {
       page = 1;
-      let array = this.getIncome();
-      this.incomeInfo = array;
+      this.getIncome({
+        sCallback: function(res) {
+          this.incomeInfo = res;
+        }.bind(this)
+      });
     },
-    getIncome() {
-      let inco = [];
+    getIncome(params) {
       this.baserequest({
         url: "Spread/income",
         data: {
@@ -60,24 +66,28 @@ export default {
         },
         sCallback: function(res) {
           for (let i = 0; i < res.length; i++) {
-            let profit = {};
-            profit.uid = res[i].order_user;
-            if (this.perinfo.user_uid === res[i].level1) {
-              profit.profit = res[i].money_level1;
-            }
-            if (this.perinfo.user_uid === res[i].level2) {
-              profit.profit = res[i].money_level2;
-            }
-            if (this.perinfo.user_uid === res[i].level3) {
-              profit.profit = res[i].money_level3;
-            }
-            profit.time = this.getTime(res[i].time);
-            profit.user_money = res[i].user_money;
-            inco.push(profit);
+            res[i].time = this.getTime(res[i].time);
           }
+          params.sCallback && params.sCallback(res);
+          // for (let i = 0; i < res.length; i++) {
+          //   let profit = {};
+          //   profit.uid = res[i].order_user;
+          //   if (this.perinfo.user_uid === res[i].level1) {
+          //     profit.profit = res[i].money_level1;
+          //   }
+          //   if (this.perinfo.user_uid === res[i].level2) {
+          //     profit.profit = res[i].money_level2;
+          //   }
+          //   if (this.perinfo.user_uid === res[i].level3) {
+          //     profit.profit = res[i].money_level3;
+          //   }
+          //   profit.time = this.getTime(res[i].time);
+          //   profit.user_money = res[i].user_money;
+          //   inco.push(profit);
+          // }
+          // console.log(inco)
         }.bind(this)
       });
-      return inco;
     },
     getTime(data) {
       data = Number(data) * 1000;
@@ -99,10 +109,24 @@ export default {
     }
   },
   mounted() {
+    var that = this;
     this.onbottom(
       function() {
-        let array = this.getIncome();
-        this.incomeInfo = this.incomeInfo.concat(array);
+        this.getIncome({
+          sCallback:function(res){
+            this.incomeInfo=this.incomeInfo.concat(res)
+          }.bind(this)
+        });
+        // console.log(array);
+        // setTimeout(
+        //   function() {
+        //     for (let i = 0; i < array.length; i++) {
+        //       this.incomeInfo.push(array[i]);
+        //     }
+        //   }.bind(this),
+        //   120
+        // );
+        // this.incomeInfo = this.incomeInfo.concat(array);
       }.bind(this)
     );
   }
@@ -137,7 +161,7 @@ export default {
       color #fff
       border-radius 5px
   .table
-    margin 8px
+    margin 8px 0 52px 0
     table
       width 100%
       th, td
